@@ -1,0 +1,4 @@
+#ifndef _PROJECT_COMMON_H_
+#define _PROJECT_COMMON_H_
+
+#endif //_PROJECT_COMMON_H_
