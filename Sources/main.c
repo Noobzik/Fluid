@@ -7,5 +7,5 @@ int main(int ac, char * ag[])
 
 	// Program
 
-	return EXIT_SUCCESS;
+	return 1;
 }
