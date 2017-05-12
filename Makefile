@@ -1,5 +1,5 @@
 #
-# Skynek C Fluid builder
+# Skynek Fluid builder
 #
 # Version: 1.5
 # Compiler: GCC
