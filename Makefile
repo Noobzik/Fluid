@@ -8,6 +8,8 @@ CFLAGS ?= -std=gnu99 -g $(WARNINGS) -fpic
 OBJDIR := Objects
 OUTDIR := Outputs
 SRCDIR := Sources
+HDRDIR := Headers
+RDSDIR := Ressources
 
 NAME := snake_$(shell uname -m)-$(shell uname -s)
 
