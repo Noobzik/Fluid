@@ -55,6 +55,7 @@ DEPS := $(patsubst %, $(OBJDIR)/%, $(SRCF:c=d))
 all: $(NAME)
 	clear
 	cd /Sources && find . -type d -exec mkdir -p /Objects/{} \;
+    cd ..
 
 # Automated compilator
 
