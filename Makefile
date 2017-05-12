@@ -80,6 +80,7 @@ clean:
 
 fclean: clean
 	$(SILENCER)$(RM) -rf $(OUTDIR)
+	$(SILENCER)$(RM) -rf $(OBJDIR)
 
 re: fclean all
 
