@@ -36,6 +36,11 @@ all: clearprompt $(NAME)
 clearprompt:
 	clear
 
+init:
+	$(SILENCER)mkdir -p $(SRCDIR)
+	$(SILENCER)mkdir -p $(HDRDIR)
+	$(SILENCER)mkdir -p $(RDSDIR)
+
 objectdir:
 	$(SILENCER)mkdir -p $(OBJDIR)
 
