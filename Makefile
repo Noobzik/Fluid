@@ -1,9 +1,9 @@
 #
 # Skynek Fluid builder
 #
-# Version: 1.5
+# Version: 1.5.2
 # Compiler: GCC
-# 
+#
 
 # Compilation settings
 
@@ -22,18 +22,18 @@ SRCDIR := Sources
 HDRDIR := Headers
 RDSDIR := Ressources
 
-NAME := snake_$(shell uname -m)-$(shell uname -s)
+NAME := project_$(shell uname -m)-$(shell uname -s)
 
 # Options
 
 ifeq ($(VERBOSE), 1)
-    SILENCER := 
+		SILENCER :=
 else
-    SILENCER := @
+		SILENCER := @
 endif
 
 ifeq ($(DEBUG_BUILD), 1)
-    CFLAGS +=-DDEBUG_BUILD
+		CFLAGS +=-DDEBUG_BUILD
 endif
 
 # Sources files
@@ -55,7 +55,7 @@ DEPS := $(patsubst %, $(OBJDIR)/%, $(SRCF:c=d))
 all: $(NAME)
 	clear
 	cd /Sources && find . -type d -exec mkdir -p /Objects/{} \;
-    cd ..
+	cd ..
 
 # Automated compilator
 
@@ -63,13 +63,14 @@ $(NAME): $(OBJS)
 	$(SILENCER)mkdir -p $(OUTDIR)
 	$(SILENCER)$(CC) $(CFLAGS) -o $(OUTDIR)/$(NAME) $^
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.C
-	$(SILENCER)mkdir -p $(OUTDIR)
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+	$(SILENCER)mkdir -p $(OBJDIR)
 	$(SILENCER)$(CC) $(CFLAGS) -c -o $@ $<
 
 # Helpers command
 
 init:
+	$(SILENCER)mkdir -p $(OBJDIR)
 	$(SILENCER)mkdir -p $(SRCDIR)
 	$(SILENCER)mkdir -p $(HDRDIR)
 	$(SILENCER)mkdir -p $(RDSDIR)
