@@ -1,20 +1,16 @@
 #
-# Skynek Fluid builder
+# Fluid
+# Version: 1.5.4
 #
-# Version: 1.5.2
-# Compiler: GCC
+# Use of this source code is governed by an MIT-style license that can be
+# found in the LICENSE file at LICENSE.md
 #
 
-# Compilation settings
+#
+# CONFIGURATIONS
+#
 
-WARNINGS := -Wall -Wextra -pedantic -Wshadow -Wpointer-arith -Wcast-align	\
-			-Wwrite-strings -Wmissing-prototypes -Wmissing-declarations		\
-			-Wredundant-decls -Wnested-externs -Winline -Wno-long-long		\
-			-Wuninitialized -Wconversion -Wstrict-prototypes
-
-CFLAGS ?= -std=gnu99 -g $(WARNINGS) -fpic
-
-# Project structure
+NAME := project_$(shell uname -m)-$(shell uname -s)
 
 OBJDIR := Objects
 OUTDIR := Outputs
@@ -22,7 +18,18 @@ SRCDIR := Sources
 HDRDIR := Headers
 RDSDIR := Ressources
 
-NAME := project_$(shell uname -m)-$(shell uname -s)
+#
+# DO NOT EDIT FORWARD
+#
+
+# Compilation settings
+
+WARNINGS := -Wall -Wextra -pedantic -Wshadow -Wpointer-arith -Wcast-align \
+			-Wwrite-strings -Wmissing-prototypes -Wmissing-declarations \
+			-Wredundant-decls -Wnested-externs -Winline -Wno-long-long \
+			-Wuninitialized -Wconversion -Wstrict-prototypes
+
+CFLAGS ?= -std=gnu99 -g $(WARNINGS) -fpic
 
 # Options
 
@@ -36,12 +43,15 @@ ifeq ($(DEBUG_BUILD), 1)
 		CFLAGS +=-DDEBUG_BUILD
 endif
 
-# Sources files
+# Compilation command
 
-SRCF := main.c
+all: init $(NAME)
+
+# Automated compilator
 
 # Compilator
 
+SRCF := $(shell find ./$(SRCDIR) -name "*.c" -type f | cut -sd / -f 3- | tr '\n' ' ')
 SRCS := $(patsubst %, $(SRCDIR)/%, $(SRCF))
 OBJS := $(patsubst %, $(OBJDIR)/%, $(SRCF:c=o))
 
@@ -49,15 +59,6 @@ OBJS := $(patsubst %, $(OBJDIR)/%, $(SRCF:c=o))
 
 CFLAGS += -MMD -MP
 DEPS := $(patsubst %, $(OBJDIR)/%, $(SRCF:c=d))
-
-# Compilation command
-
-all: $(NAME)
-	clear
-	cd /Sources && find . -type d -exec mkdir -p /Objects/{} \;
-	cd ..
-
-# Automated compilator
 
 $(NAME): $(OBJS)
 	$(SILENCER)mkdir -p $(OUTDIR)
@@ -74,6 +75,8 @@ init:
 	$(SILENCER)mkdir -p $(SRCDIR)
 	$(SILENCER)mkdir -p $(HDRDIR)
 	$(SILENCER)mkdir -p $(RDSDIR)
+	$(SILENCER)cd ./Sources && find . -type d -exec mkdir -p ../$(OBJDIR)/{} \;
+	$(SILENCER)cd ..
 
 clean:
 	clear
