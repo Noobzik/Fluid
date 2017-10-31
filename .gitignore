@@ -7,6 +7,63 @@ Outputs/
 Objects/
 
 # =============================================================================
+#   C
+# =============================================================================
+
+# Prerequisites
+*.d
+
+# Object files
+*.o
+*.ko
+*.obj
+*.elf
+
+# Linker output
+*.ilk
+*.map
+*.exp
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Libraries
+*.lib
+*.a
+*.la
+*.lo
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Executables
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# Kernel Module Compile Results
+*.mod*
+*.cmd
+.tmp_versions/
+modules.order
+Module.symvers
+Mkfile.old
+dkms.conf
+
+# =============================================================================
 #   Window
 # =============================================================================
 
@@ -15,7 +72,7 @@ Thumbs.db
 ehthumbs.db
 ehthumbs_vista.db
 
-# Folder config file
+# Folder settings file
 Desktop.ini
 
 # Recycle Bin used on file shares
@@ -304,7 +361,7 @@ PublishScripts/
 # except build/, which is used as an MSBuild target.
 !**/packages/build/
 # Uncomment if necessary however generally it will be regenerated when needed
-#!**/packages/repositories.config
+#!**/packages/repositories.settings
 # NuGet v3's project.json files produces more ignorable files
 *.nuget.props
 *.nuget.targets
@@ -368,7 +425,7 @@ UpgradeLog*.htm
 # Microsoft Fakes
 FakesAssemblies/
 
-# GhostDoc plugin setting file
+# GhostDoc plugin settings file
 *.GhostDoc.xml
 
 # Node.js Tools for Visual Studio
@@ -415,7 +472,7 @@ __pycache__/
 
 # Cake - Uncomment if you are using it
 # tools/**
-# !tools/packages.config
+# !tools/packages.settings
 
 # Telerik's JustMock configuration file
 *.jmconfig
