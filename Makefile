@@ -57,6 +57,7 @@ else
     SRCS := $(shell find ./$(SRCDIR) ! -name '*.test.cpp' -name "*.cpp" -type f | cut -sd / -f 3- | tr '\n' ' ')
 endif
 OBJS := $(patsubst %, $(OBJDIR)/%, $(SRCS:cpp=o))
+DEPS :=$(patsubst %.cpp, %.d, $(SRCS))
 
 # Compilation output configurations
 
@@ -90,3 +91,5 @@ eject: fclean
 re: fclean all
 
 .PHONY: re fclean clean init all
+
+-include $(DEPS)
