@@ -1,6 +1,6 @@
 #
 # Fluid
-# Version: 1.5.7
+# Version: 1.5.8
 #
 # Use of this source code is governed by an MIT-style license that can be
 # found in the LICENSE file at LICENSE.md
@@ -12,10 +12,11 @@
 
 OUTNAME := project_$(shell uname -m)-$(shell uname -s)
 
-OBJDIR := Objects
-OUTDIR := Outputs
-SRCDIR := Sources
-HDRDIR := Headers
+DEPDIR := .cache
+OBJDIR := .cache
+OUTDIR := .
+SRCDIR := .
+HDRDIR := .
 
 #
 # DO NOT EDIT FORWARD
@@ -29,7 +30,7 @@ WARNINGS := -Wall -Wextra -pedantic -Wshadow -Wpointer-arith -Wcast-align \
 			-Wwrite-strings -Wmissing-declarations -Wredundant-decls \
 			-Winline -Wno-long-long -Wuninitialized -Wconversion
 
-CFLAGS ?= -std=c++14 $(WARNINGS)
+CFLAGS ?= -std=c++14 -g $(WARNINGS)
 
 # Options
 
@@ -51,13 +52,13 @@ all: init $(OUTNAME)
 
 # Compilator files
 
+SRCS := $(wildcard $(SRCDIR)/*.cpp)
+
 ifeq ($(TEST_BUILD), 1)
-    SRCS := $(shell find ./$(SRCDIR) -name "*.cpp" -type f | cut -sd / -f 3- | tr '\n' ' ')
-else
-    SRCS := $(shell find ./$(SRCDIR) ! -name '*.test.cpp' -name "*.cpp" -type f | cut -sd / -f 3- | tr '\n' ' ')
+	SRCS := $(filter-out $(wildcard $(SRCDIR)/*.test.cpp), $(SRCS))
 endif
+
 OBJS := $(patsubst %, $(OBJDIR)/%, $(SRCS:cpp=o))
-DEPS :=$(patsubst %.cpp, %.d, $(SRCS))
 
 # Compilation output configurations
 
@@ -66,6 +67,7 @@ CFLAGS += -MMD -MP
 $(OUTNAME): $(OBJS)
 	$(SILENCER)mkdir -p $(OUTDIR)
 	$(SILENCER)$(CC) $(CFLAGS) -o $(OUTDIR)/$(OUTNAME) $^
+	$(SILENCER)$(POSTCOMPILE)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	$(SILENCER)mkdir -p $(OBJDIR)
@@ -85,11 +87,6 @@ fclean: clean
 	$(SILENCER)$(RM) -r ./$(OBJDIR)
 	$(SILENCER)$(RM) -r ./$(OUTDIR)/$(OUTNAME)
 
-eject: fclean
-	$(SILENCER)$(RM) ./Makefile
-
 re: fclean all
 
 .PHONY: re fclean clean init all
-
--include $(DEPS)
