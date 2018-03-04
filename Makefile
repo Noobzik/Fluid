@@ -29,7 +29,8 @@ CC := g++
 
 WARNINGS := -Wall -Wextra -pedantic -Wshadow -Wpointer-arith -Wcast-align \
 			-Wwrite-strings -Wmissing-declarations -Wredundant-decls \
-			-Winline -Wno-long-long -Wuninitialized -Wconversion -Wfatal-errors
+			-Winline -Wno-long-long -Wuninitialized -Wconversion -Wfatal-errors \
+			-fsanitize-address-use-after-scope -fsanitize=address
 
 CFLAGS ?= -std=c++14 $(WARNINGS)
 
