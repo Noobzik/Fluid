@@ -26,6 +26,7 @@ HDRDIR := .
 # Compilation settings
 
 CC := g++
+TYPE := cpp
 
 WARNINGS := -Wall -Wextra -pedantic -Wshadow -Wpointer-arith -Wcast-align \
 			-Wwrite-strings -Wmissing-declarations -Wredundant-decls \
@@ -55,12 +56,12 @@ all: init $(OUTNAME)
 # Compilator files
 
 ifeq ($(TEST_BUILD), 1)
-    SRCS := $(shell find $(ROTDIR)$(SRCDIR) -name "*.cpp" -type f | cut -sd / -f 3- | tr '\n' ' ')
+    SRCS := $(shell find $(ROTDIR)$(SRCDIR) -name "*.$(TYPE)" -type f | cut -sd / -f 3- | tr '\n' ' ')
 else
-    SRCS := $(shell find $(ROTDIR)$(SRCDIR) ! -name '*.test.cpp' -name "*.cpp" -type f | cut -sd / -f 3- | tr '\n' ' ')
+    SRCS := $(shell find $(ROTDIR)$(SRCDIR) ! -name '*.test.$(TYPE)' -name "*.$(TYPE)" -type f | cut -sd / -f 3- | tr '\n' ' ')
 endif
-OBJS := $(patsubst %, $(OBJDIR)/%, $(SRCS:cpp=o))
-DEPS :=$(patsubst %.cpp, %.d, $(SRCS))
+OBJS := $(patsubst %, $(OBJDIR)/%, $(SRCS:$(TYPE)=o))
+DEPS :=$(patsubst %.$(TYPE), %.d, $(SRCS))
 
 # Compilation output configurations
 
@@ -71,7 +72,7 @@ $(OUTNAME): $(OBJS)
 	$(SILENCER)mkdir -p $(OUTDIR)
 	$(SILENCER)$(CC) $(CFLAGS) -o $(OUTDIR)/$(OUTNAME) $^
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.cpp $(DEPDIR)/%.d
+$(OBJDIR)/%.o: $(SRCDIR)/%.$(TYPE) $(DEPDIR)/%.d
 	$(SILENCER)mkdir -p $(OBJDIR)
 	$(SILENCER)$(CC) $(CFLAGS) -c -o $@ $<
 	$(POSTCOMPILE)
